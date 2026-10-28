@@ -77,16 +77,16 @@ test("archives link to the next page and every article without script execution"
   assert.deepEqual([...linked].sort(), expected.sort());
 });
 
-test("the root renders the local blog with production SEO metadata and same-host navigation", () => {
+test("the root renders locally while branding links and SEO use the public site", () => {
   assert.equal(manifest.routes["/"].initialRevalidateSeconds, false);
   assert.ok(!routes.redirects.some((route) => route.source === "/"));
   assert.ok(!routes.redirects.some((route) => /^https?:\/\//.test(route.destination)));
   const root = readFileSync(`${output}/index.html`, "utf8");
   assert.match(root, /class="blog-index"/);
   assert.match(root, /class="article-card-link" href="\/blog\//);
-  assert.match(root, /class="brand" href="\/"/);
-  assert.match(root, /href="\/" class="footer-link"/);
-  assert.match(root, /href="\/" class="footer-wordmark"/);
+  assert.match(root, /class="brand" href="https:\/\/trypickle.site\/"/);
+  assert.match(root, /href="https:\/\/trypickle.site\/" class="footer-link"/);
+  assert.match(root, /href="https:\/\/trypickle.site\/" class="footer-wordmark"/);
   assert.match(root, /rel="canonical" href="https:\/\/trypickle.site\/blog"/);
   assert.match(root, /property="og:url" content="https:\/\/trypickle.site\/blog"/);
 });

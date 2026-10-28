@@ -19,7 +19,7 @@ img { display: block; max-width: 100%; }
 
 .blog-header { display: flex; justify-content: center; padding: 34px 24px 0; margin-bottom: 44px; }
 .brand { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-.brand img { width: 48px; height: 48px; border-radius: 13px; }
+.brand img { width: 48px; height: 48px; object-fit: contain; }
 .wordmark { font-family: "Instrument Serif", Georgia, serif; font-size: 30px; line-height: 1.1; letter-spacing: -1.2px; }
 .blog-index { width: min(var(--column), calc(100% - 48px)); margin-inline: auto; }
 .article-card { border-bottom: 1px solid var(--line); }
@@ -56,7 +56,7 @@ img { display: block; max-width: 100%; }
 .article-deck { margin: 0 0 21px; font-size: 14px; line-height: 1.8; color: #686868; }
 .byline { margin: 0; font-size: 10px; color: var(--muted); }
 .article-hero { margin: 0 0 34px; }
-.article-hero img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 7px; }
+.article-hero img { width: 100%; height: auto; border-radius: 7px; }
 .article-hero figcaption { font-size: 10px; line-height: 1.7; color: var(--muted); margin-top: 9px; }
 .prose { font-size: 15px; line-height: 1.9; color: #454545; overflow-wrap: break-word; }
 .prose > :first-child { margin-top: 0; }

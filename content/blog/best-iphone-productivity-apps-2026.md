@@ -5,10 +5,12 @@ excerpt: "Your iPhone can do a lot more than you think. But between endless noti
 category: "iPhone Productivity"
 date: "2026-10-28"
 draft: false
-image: "/blog/assets/iphone-productivity.webp"
-imageAlt: "An iPhone showing a productivity widget above a landscape wallpaper"
-hero: "/blog/assets/pickle-iphone.webp"
-heroAlt: "An iPhone with Pickle on a quiet, sunlit desk."
+image: "/blog/assets/pickle-shopify-thumbnail.webp"
+imageAlt: "An iPhone showing Pickle’s Shopify dashboard over a mountain landscape"
+hero: "/blog/assets/pickle-shopify-dashboard.webp"
+heroAlt: "Pickle’s Shopify dashboard on an iPhone, with a mountain landscape wallpaper."
+heroWidth: 1200
+heroHeight: 643
 related:
   - a-calmer-iphone-home-screen
   - a-weekly-review-you-will-actually-do
@@ -25,13 +27,13 @@ Choose one tool for each job. Give it a week of ordinary use before adding anoth
 
 ## 1. Pickle: a place to start with everyday productivity
 
-[Pickle](/) is our iPhone productivity app. It belongs on this list as an option for people interested in a more considered relationship with their phone. Visit the product page for its current capabilities and availability, then decide whether those capabilities address a real interruption in your day.
+[Pickle](https://trypickle.site/) is our iPhone productivity app. It belongs on this list as an option for people interested in a more considered relationship with their phone. Visit the product page for its current capabilities and availability, then decide whether those capabilities address a real interruption in your day.
 
 Our suggested evaluation is simple: choose one recurring moment when you reach for your phone, and see whether Pickle helps you handle that moment with less effort. Keep the tools that make a difference you can describe.
 
 ## 2. Apple Reminders: everyday commitments
 
-[Apple Reminders](https://support.apple.com/guide/iphone/use-reminders-iph88463e18/ios) is a sensible starting point for errands, follow-ups, and personal tasks. An app that is already part of your phone can be easier to adopt than a new system with an elaborate setup.
+[Apple Reminders](https://support.apple.com/en-us/102484) is a sensible starting point for errands, follow-ups, and personal tasks. An app that is already part of your phone can be easier to adopt than a new system with an elaborate setup.
 
 Start with a single inbox and a short list for today. Write actions you can recognize later: “Send the revised proposal to Maya” is easier to act on than “Proposal.” Add a date when something actually needs to happen, rather than giving every task an artificial deadline.
 
@@ -49,7 +51,7 @@ Choose a small set of projects you understand at a glance. Resist adding labels 
 
 ## 5. Apple Notes: a reliable place for loose thoughts
 
-[Apple Notes](https://support.apple.com/guide/iphone/get-started-with-notes-iph7cfc731be/ios) is a practical home for information that is not yet a task: a meeting note, a question, or the beginnings of an idea. The important habit is giving those fragments one predictable destination.
+[Apple Notes](https://support.apple.com/en-us/118442) is a practical home for information that is not yet a task: a meeting note, a question, or the beginnings of an idea. The important habit is giving those fragments one predictable destination.
 
 Create a note called “Inbox” and keep it easy to reach. Once a week, move commitments to your task list and keep reference material in notes. Information and obligations benefit from different homes.
 

@@ -22,6 +22,8 @@ export type Article = {
   imageAlt: string;
   hero?: string;
   heroAlt?: string;
+  heroWidth?: number;
+  heroHeight?: number;
   related: string[];
   content: string;
   readingMinutes: number;
@@ -55,6 +57,11 @@ export function parseArticle(filename: string, source: string): Article {
   if (/^#\s/m.test(content)) fail("Start content headings at ##; the template supplies the H1.");
   if (content.trim().split(/\s+/).length < 200 && !data.draft) fail("Published articles need at least 200 words.");
   const image = text("image");
+  for (const dimension of ["heroWidth", "heroHeight"]) {
+    if (data[dimension] !== undefined && (!Number.isSafeInteger(data[dimension]) || data[dimension] <= 0)) {
+      fail(`${dimension} must be a positive integer.`);
+    }
+  }
   for (const asset of [image, data.hero].filter(Boolean)) {
     if (typeof asset !== "string" || !/^\/blog\/assets\/[a-z0-9-]+\.(webp|png|jpg|svg)$/.test(asset)) {
       fail("Images must use a local /blog/assets/filename path.");
@@ -66,6 +73,8 @@ export function parseArticle(filename: string, source: string): Article {
     category: text("category"), date: data.date, updated: data.updated, draft: data.draft,
     image, imageAlt: text("imageAlt"), hero: data.hero,
     heroAlt: data.hero ? text("heroAlt") : undefined,
+    heroWidth: data.hero ? (data.heroWidth ?? 1200) : undefined,
+    heroHeight: data.hero ? (data.heroHeight ?? 800) : undefined,
     related: data.related, content,
     readingMinutes: Math.max(1, Math.ceil(content.trim().split(/\s+/).length / 220)),
   };

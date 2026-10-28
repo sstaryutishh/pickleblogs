@@ -34,7 +34,7 @@ export default async function ArticlePage({ params }: Props) {
             {article.updated && <> <span aria-hidden="true">·</span> Updated <time dateTime={article.updated}>{formatDate(article.updated)}</time></>}
           </p>
         </header>
-        {article.hero && <figure className="article-hero"><Image src={article.hero} alt={article.heroAlt!} width={1200} height={800} priority /><figcaption>{article.heroAlt}</figcaption></figure>}
+        {article.hero && <figure className="article-hero"><Image src={article.hero} alt={article.heroAlt!} width={article.heroWidth} height={article.heroHeight} priority /><figcaption>{article.heroAlt}</figcaption></figure>}
         <div className="prose" dangerouslySetInnerHTML={{ __html: content }} />
       </article>
       {related.length > 0 && <aside className="related-articles" aria-labelledby="related-title">

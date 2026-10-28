@@ -3,7 +3,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { getArticles, getArticlePage, getPageCount } from "../../lib/articles";
 import { PAGE_SIZE } from "../../lib/site";
 
-test("the root serves the local blog and home links stay on the same host", async ({ page, request, baseURL }) => {
+test("the root serves the local blog and branding links open the Pickle site", async ({ page, request }) => {
   const root = await request.get("/", { maxRedirects: 0 });
   expect(root.status()).toBe(200);
   expect(root.headers().location).toBeUndefined();
@@ -11,12 +11,12 @@ test("the root serves the local blog and home links stay on the same host", asyn
   await expect(page.locator(".blog-index")).toBeVisible();
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://trypickle.site/blog");
   await expect(page.locator('meta[property="og:url"]')).toHaveAttribute("content", "https://trypickle.site/blog");
-  for (const selector of [".brand", ".footer-link", ".footer-wordmark"]) {
+  await page.route("https://trypickle.site/", (route) => route.fulfill({ contentType: "text/html", body: "<title>Pickle homepage</title>" }));
+  for (const selector of [".brand", ".footer-link", ".footer-wordmark", '.prose a[href="https://trypickle.site/"]']) {
     await page.goto("/blog/best-iphone-productivity-apps-2026");
-    await expect(page.locator(selector)).toHaveAttribute("href", "/");
+    await expect(page.locator(selector)).toHaveAttribute("href", "https://trypickle.site/");
     await page.locator(selector).click();
-    await expect(page).toHaveURL(new URL("/", baseURL!).toString());
-    await expect(page.locator(".blog-index")).toBeVisible();
+    await expect(page).toHaveURL("https://trypickle.site/");
   }
 });
 
@@ -24,7 +24,7 @@ test("the index matches the compact layout and Read More navigates to real artic
   await page.goto("/blog");
   await expect(page.locator(".article-card")).toHaveCount(Math.min(PAGE_SIZE, getArticles().length));
   await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
-  await expect(page.getByRole("link", { name: "Pickle homepage" })).toHaveAttribute("href", "/");
+  await expect(page.getByRole("link", { name: "Pickle homepage" })).toHaveAttribute("href", "https://trypickle.site/");
   const column = await page.locator(".blog-index").boundingBox();
   expect(column!.width).toBe(460);
   await page.getByRole("link", { name: /Read More/ }).click();
@@ -113,12 +113,14 @@ test("sitemap discovers all articles and robots advertises the public sitemap", 
   expect(await robots.text()).toContain("Sitemap: https://trypickle.site/blog/sitemap.xml");
 });
 
-test("all page assets stay beneath the Framer /blog rewrite boundary", async ({ page }) => {
+test("blog assets stay beneath /blog while Vercel serves its analytics script", async ({ page }) => {
+  // Vercel supplies this endpoint on deployments; a local Next.js server does not.
+  await page.route("**/_vercel/insights/**", (route) => route.fulfill({ contentType: "application/javascript", body: "" }));
   const failures: string[] = [];
   page.on("response", (response) => { if (response.status() >= 400) failures.push(response.url()); });
   await page.goto("/blog", { waitUntil: "networkidle" });
   const assets = await page.evaluate(() => performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname));
   expect(assets.length).toBeGreaterThan(0);
-  expect(assets.filter((url) => !url.startsWith("/blog/"))).toEqual([]);
+  expect(assets.filter((url) => !url.startsWith("/blog/") && !url.startsWith("/_vercel/insights/"))).toEqual([]);
   expect(failures).toEqual([]);
 });

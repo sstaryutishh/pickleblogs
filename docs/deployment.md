@@ -22,7 +22,7 @@ Framer's current requirements are a Pro plan with the Advanced Hosting add-on, o
 4. Make that production alias publicly accessible to Framer. Preview deployments can remain protected. Confirm `/blog` is reachable while signed out; a Vercel authentication page cannot be used as the public blog origin. See [Vercel deployment protection](https://vercel.com/docs/deployment-protection).
 5. Test `https://BLOG_ORIGIN/blog`, page 2, an article, a missing slug, `/blog/sitemap.xml`, `/robots.txt`, and the images/styles. Canonicals intentionally already name `https://trypickle.site`, even on the Vercel origin.
 
-**Do not attach `trypickle.site` or `www.trypickle.site` to this Vercel project.** This app's root renders the blog for local development and direct-origin access; attaching the apex directly would bypass the existing Framer homepage. Forward only the two blog paths below so Framer retains the public root. There is no application redirect from `/` to production, and local logo/footer links remain on the current host.
+**Do not attach `trypickle.site` or `www.trypickle.site` to this Vercel project.** This app's root renders the blog for local development and direct-origin access; attaching the apex directly would bypass the existing Framer homepage. Forward only the two blog paths below so Framer retains the public root. There is no application redirect from `/` to production. Clicking the logo, Pickle wordmark, or product CTA explicitly opens `https://trypickle.site/`.
 
 ## 2. Add exactly two Framer external rewrites
 
@@ -36,6 +36,8 @@ In the existing Framer project, open **Site Settings → Hosting → Multi Site 
 Framer uses `:1` to insert the captured wildcard. The exact `/blog` rule covers the index; the wildcard covers articles, pagination, `/blog/assets/*`, `/blog/_next/*`, and `/blog/sitemap.xml`. Put these before any existing broad rules that would match them. Publish the Framer project for the changes to take effect. The homepage remains the existing Framer page.
 
 The application uses Next.js's multi-zone `assetPrefix: "/blog"`. Its generated bundles are served under `/blog/_next/`, and public images are under `/blog/assets/`. There is no need to forward the global `/_next/*` path or change `basePath`; adding a `/blog` basePath to the existing route tree would produce `/blog/blog` URLs. This setup follows the [Next.js multi-zone model](https://nextjs.org/docs/app/guides/multi-zones).
+
+**Web Analytics:** the two rules above cover the blog itself. Vercel's analytics script and collection endpoints are platform routes outside that asset prefix, normally `/_vercel/insights/*`. If serving the blog through Framer, also forward these analytics requests to the same Vercel origin. Analytics 2.x can use additional generated paths through Vercel's Resilient Intake; check the deployed page's network requests and forward any enabled generated paths as well. On a blog subdomain served directly by Vercel, no additional proxy rules are needed. See [Vercel's Analytics setup](https://vercel.com/docs/analytics/quickstart). These instructions do not apply or change any production routing automatically.
 
 If there is an old Framer `/blog` page, the rewrite takes precedence. Check any existing article URLs before replacing the blog path, and add explicit redirects for old published slugs if necessary. The original site could not be fetched from the implementation environment, so existing blog URLs and account capabilities have not been verified.
 
