@@ -1,0 +1,42 @@
+{
+  "name": "pickle-blog",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "test:build": "node --test tests/build-artifacts.test.mjs",
+    "test:e2e": "playwright test",
+    "check": "npm run lint && npm run typecheck && npm test && npm run build && npm run test:build && npm run test:e2e"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "dependencies": {
+    "@fontsource/instrument-serif": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "gray-matter": "^4.0.3",
+    "next": "^16.4.3",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "remark": "^15.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-html": "^16.0.1"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.3",
+    "sharp": "^0.35.5",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3"
+  }
+}
